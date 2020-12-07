@@ -1,0 +1,21 @@
+{
+	"ts-node": {
+		"transpileOnly": true,
+		"compilerOptions": {
+			"module": "CommonJS"
+		},
+		"include": ["./*.ts"]
+	},
+	"compilerOptions": {
+		"rootDir": "./src",
+		"moduleResolution": "node",
+		"module": "ESNext",
+		"target": "ESNext",
+		"strict": true,
+		"sourceMap": false,
+		"removeComments": true,
+		"skipLibCheck": true,
+		"strictNullChecks": false
+	},
+	"include": ["./src"]
+}

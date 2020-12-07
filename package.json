@@ -1,0 +1,83 @@
+{
+	"name": "esbuild-plugin-glsl",
+	"version": "1.0.0",
+	"description": "A GLSL plugin for esbuild.",
+	"homepage": "https://github.com/vanruesc/esbuild-plugin-glsl",
+	"main": "dist/esbuild-plugin-glsl.js",
+	"module": "dist/esbuild-plugin-glsl.esm.js",
+  "types": "dist/types/index.d.ts",
+	"exports": {
+		".": "./dist/esbuild-plugin-glsl.esm.js"
+	},
+	"sideEffects": false,
+	"license": "Zlib",
+	"keywords": [
+		"esbuild",
+		"plugin",
+		"glsl",
+		"frag",
+		"vert",
+		"import",
+		"compress",
+		"minify"
+	],
+	"author": {
+		"name": "Raoul van Rüschen",
+		"email": "vanruesc@outlook.de"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vanruesc/esbuild-plugin-glsl.git"
+	},
+	"bugs": {
+		"url": "https://github.com/vanruesc/esbuild-plugin-glsl/issues"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"ava": "ava",
+		"build": "run-s build:*",
+		"build:js": "ts-node-script esbuild",
+		"build:dts": "tsc -p tsconfig.d.json",
+		"lint": "eslint src --fix",
+		"prepublishOnly": "npm test",
+		"pretest": "del dist",
+		"test": "run-s lint build ava"
+	},
+	"ava": {
+		"failFast": true,
+		"extensions": [
+			"ts"
+		],
+		"files": [
+			"test/test.ts"
+		],
+		"require": [
+			"ts-node/register"
+		]
+	},
+	"eslintConfig": {
+		"root": true,
+		"extends": "aether/typescript",
+		"parserOptions": {
+			"project": [
+				"tsconfig.json"
+			]
+		}
+	},
+	"devDependencies": {
+		"@types/node": "14.x.x",
+		"@typescript-eslint/eslint-plugin": "4.x.x",
+		"@typescript-eslint/parser": "4.x.x",
+		"ava": "3.x.x",
+		"del-cli": "3.x.x",
+		"esbuild": "0.x.x",
+		"eslint": "7.x.x",
+		"eslint-config-aether": "1.x.x",
+		"npm-run-all": "4.x.x",
+		"ts-node": "9.x.x",
+		"tslib": "2.x.x",
+		"typescript": "4.x.x"
+	}
+}
