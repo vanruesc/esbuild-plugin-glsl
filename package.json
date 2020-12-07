@@ -5,7 +5,7 @@
 	"homepage": "https://github.com/vanruesc/esbuild-plugin-glsl",
 	"main": "dist/esbuild-plugin-glsl.js",
 	"module": "dist/esbuild-plugin-glsl.esm.js",
-  "types": "dist/types/index.d.ts",
+	"types": "dist/types/index.d.ts",
 	"exports": {
 		".": "./dist/esbuild-plugin-glsl.esm.js"
 	},
