@@ -8,7 +8,7 @@ import { minifyShader } from "./minifyShader";
 
 export interface GLSLOptions {
 
-  minify?: boolean;
+	minify?: boolean;
 
 }
 
