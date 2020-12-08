@@ -1,6 +1,6 @@
 # esbuild-plugin-glsl
 
-[![CI](https://badgen.net/github/checks/vanruesc/esbuild-plugin-glsl)](https://github.com/vanruesc/esbuild-plugin-glsl/actions)
+[![CI](https://badgen.net/github/checks/vanruesc/esbuild-plugin-glsl/main)](https://github.com/vanruesc/esbuild-plugin-glsl/actions)
 [![Version](https://badgen.net/npm/v/esbuild-plugin-glsl?color=green)](https://www.npmjs.com/package/esbuild-plugin-glsl)
 
 An [esbuild](https://esbuild.github.io/) [plugin](https://esbuild.github.io/plugins/) that adds support for `.frag`, `.vert` and `.glsl` [file imports](https://esbuild.github.io/content-types/#text) with optional shader minification.
