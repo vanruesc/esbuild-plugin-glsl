@@ -4,9 +4,9 @@ devDependencies:
   '@typescript-eslint/parser': 4.9.1_eslint@7.15.0+typescript@4.1.2
   ava: 3.14.0
   del-cli: 3.0.1
-  esbuild: 0.8.20
+  esbuild: 0.8.21
   eslint: 7.15.0
-  eslint-config-aether: 1.1.1
+  eslint-config-aether: 1.1.2
   npm-run-all: 4.1.5
   ts-node: 9.1.1_typescript@4.1.2
   tslib: 2.0.3
@@ -423,7 +423,7 @@ packages:
       matcher: 3.0.0
       md5-hex: 3.0.1
       mem: 8.0.0
-      ms: 2.1.2
+      ms: 2.1.3
       ora: 5.1.0
       p-event: 4.2.0
       p-map: 4.0.0
@@ -990,12 +990,12 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==
-  /esbuild/0.8.20:
+  /esbuild/0.8.21:
     dev: true
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-xXNLXa2SraaAoeTybOMAvOf6KW/DthI3ATXMG+W3yMav1iFpEGvo4XS22AzCPE3rTXbK/7TykxpwI8mD6lYUOg==
+      integrity: sha512-vRRx5MZmiekw2R7jK5BppvBUFCJA0Zkl0wYxrDmyUvMPBcQC/xJvxJUM4R+Hgjgb3gp5P1W655AsuoqDeQQDVw==
   /escalade/3.1.1:
     dev: true
     engines:
@@ -1026,10 +1026,10 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
-  /eslint-config-aether/1.1.1:
+  /eslint-config-aether/1.1.2:
     dev: true
     resolution:
-      integrity: sha512-dchqc/ENmk6UikxPKkzHrhttZihDsTAJ7OxRPZIg08BSQgEZVMHmqce17xahvn4Z1/Qagw1R7ZtZp+oNCJpMWA==
+      integrity: sha512-IjQ1jDiavWRHFHtkRiUgx5u3JsbBI8iEXbr7/u9jQ+RLc2yAZD16UebK73gykHM7lz9z5CIWWlO6qDnzjWUdfQ==
   /eslint-scope/5.1.1:
     dependencies:
       esrecurse: 4.3.0
@@ -1957,6 +1957,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
+  /ms/2.1.3:
+    dev: true
+    resolution:
+      integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
   /mute-stream/0.0.8:
     dev: true
     resolution:
