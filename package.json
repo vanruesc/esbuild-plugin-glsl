@@ -17,6 +17,7 @@
 		"glsl",
 		"frag",
 		"vert",
+		"shader",
 		"import",
 		"compress",
 		"minify"
