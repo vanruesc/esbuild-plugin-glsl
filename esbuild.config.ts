@@ -11,8 +11,8 @@ const banner = `/**
  */`;
 
 const ext = new Map([
-	["esm", ".esm.js"],
-	["cjs", ".js"]
+	["esm", ".js"],
+	["cjs", ".cjs"]
 ]);
 
 function config(format: string, minify = false): BuildOptions {

@@ -1,7 +1,7 @@
 import { build } from "esbuild";
 import * as fs from "fs/promises";
 import test from "ava";
-import glsl from "../dist/esbuild-plugin-glsl.js";
+import glsl from "../";
 
 const EOL = /(?:\\r\\n|\\r|\\n)/g;
 

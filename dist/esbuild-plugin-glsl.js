@@ -1,10 +1,10 @@
 /**
- * esbuild-plugin-glsl v1.0.0 build Mon Dec 07 2020
+ * esbuild-plugin-glsl v1.0.0 build Tue Dec 22 2020
  * https://github.com/vanruesc/esbuild-plugin-glsl
  * Copyright 2020 Raoul van Rüschen
  * @license Zlib
  */
-var f=Object.create,o=Object.defineProperty,m=Object.getPrototypeOf,g=Object.prototype.hasOwnProperty,d=Object.getOwnPropertyNames,c=Object.getOwnPropertyDescriptor,a=e=>o(e,"__esModule",{value:!0}),h=(e,r)=>{a(e);for(var s in r)o(e,s,{get:r[s],enumerable:!0})},L=(e,r,s)=>{if(a(e),r&&typeof r=="object"||typeof r=="function")for(let t of d(r))!g.call(e,t)&&t!=="default"&&o(e,t,{get:()=>r[t],enumerable:!(s=c(r,t))||s.enumerable});return e},x=e=>e&&e.__esModule?e:L(o(e!=null?f(m(e)):{},"default",{value:e,enumerable:!0}),e);h(exports,{default:()=>y});var p=x(require("fs"));function u(e){let r=/[ \t]*(?:(?:\/\*[\s\S]*?\*\/)|(?:\/\/.*\n))/g,s=/\s*({|}|=|\*|,|\+|\/|>|<|&|\||\[|\]|\(|\)|-|!|;)\s*/g,t=e.replace(/\r/g,"").replace(r,""),l=!1;return t=t.split(/\n+/).reduce((i,n)=>(n=n.trim().replace(/\s{2,}|\t/," "),n[0]==="#"?(l&&i.push(`
-`),i.push(n,`
-`),l=!1):(n=n.replace(/(else)$/m,"$1 "),i.push(n.replace(s,"$1")),l=!0),i),[]).join(""),t.replace(/\n{2,}/g,`
-`)}function y({minify:e=!1}={}){return{name:"glsl",setup(r){r.onLoad({filter:/\.(?:frag|vert|glsl)$/},async s=>{let t=await p.promises.readFile(s.path,"utf8");return{contents:e?u(t):t,loader:"text"}})}}}
+import{readFile as a}from"fs/promises";function l(s){let n=/[ \t]*(?:(?:\/\*[\s\S]*?\*\/)|(?:\/\/.*\n))/g,i=/\s*({|}|=|\*|,|\+|\/|>|<|&|\||\[|\]|\(|\)|-|!|;)\s*/g,r=s.replace(/\r/g,"").replace(n,""),o=!1;return r=r.split(/\n+/).reduce((t,e)=>(e=e.trim().replace(/\s{2,}|\t/," "),e[0]==="#"?(o&&t.push(`
+`),t.push(e,`
+`),o=!1):(e=e.replace(/(else)$/m,"$1 "),t.push(e.replace(i,"$1")),o=!0),t),[]).join(""),r.replace(/\n{2,}/g,`
+`)}function u({minify:s=!1}={}){return{name:"glsl",setup(n){n.onLoad({filter:/\.(?:frag|vert|glsl)$/},async i=>{let r=await a(i.path,"utf8");return{contents:s?l(r):r,loader:"text"}})}}}export{u as default};

@@ -3,11 +3,11 @@
 	"version": "1.0.0",
 	"description": "A GLSL plugin for esbuild.",
 	"homepage": "https://github.com/vanruesc/esbuild-plugin-glsl",
-	"main": "dist/esbuild-plugin-glsl.js",
-	"module": "dist/esbuild-plugin-glsl.esm.js",
-	"types": "dist/types/index.d.ts",
+	"main": "dist/esbuild-plugin-glsl.cjs",
+  "types": "dist/types/index.d.ts",
 	"exports": {
-		".": "./dist/esbuild-plugin-glsl.esm.js"
+		"import": "./dist/esbuild-plugin-glsl.js",
+		"require": "./dist/esbuild-plugin-glsl.cjs"
 	},
 	"sideEffects": false,
 	"license": "Zlib",
