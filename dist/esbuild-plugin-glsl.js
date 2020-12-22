@@ -1,5 +1,5 @@
 /**
- * esbuild-plugin-glsl v1.0.0 build Tue Dec 22 2020
+ * esbuild-plugin-glsl v1.0.1 build Tue Dec 22 2020
  * https://github.com/vanruesc/esbuild-plugin-glsl
  * Copyright 2020 Raoul van Rüschen
  * @license Zlib
