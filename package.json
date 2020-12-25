@@ -4,7 +4,7 @@
 	"description": "A GLSL plugin for esbuild.",
 	"homepage": "https://github.com/vanruesc/esbuild-plugin-glsl",
 	"main": "dist/esbuild-plugin-glsl.cjs",
-  "types": "dist/types/index.d.ts",
+	"types": "dist/types/index.d.ts",
 	"exports": {
 		"import": "./dist/esbuild-plugin-glsl.js",
 		"require": "./dist/esbuild-plugin-glsl.cjs"
@@ -66,6 +66,9 @@
 				"tsconfig.json"
 			]
 		}
+	},
+	"peerDependencies": {
+		"esbuild": "0.x.x"
 	},
 	"devDependencies": {
 		"@types/node": "14.x.x",
