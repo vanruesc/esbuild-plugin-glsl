@@ -1,12 +1,6 @@
 name: CI
 
-on:
-  push:
-    paths-ignore:
-      - "dist/**"
-  pull_request:
-    paths-ignore:
-      - "dist/**"
+on: push
 
 jobs:
   test:
@@ -18,7 +12,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: "14"
+          node-version: 14
       - name: Install PNPM
         run: npm install -g pnpm
       - name: Install and test
