@@ -43,7 +43,7 @@
 		"build:dts": "tsc -p tsconfig.d.json",
 		"lint": "eslint src --fix",
 		"prepublishOnly": "npm test",
-		"pretest": "del-cli dist",
+		"pretest": "del-cli dist test/generated",
 		"test": "run-s lint build ava"
 	},
 	"ava": {

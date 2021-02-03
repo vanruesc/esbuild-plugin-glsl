@@ -5,14 +5,7 @@ import test from "ava";
 import glsl from "../";
 
 const EOL = /(?:\\r\\n|\\r|\\n)/g;
-const rmdir = util.promisify(fs.rmdir);
 const readFile = util.promisify(fs.readFile);
-
-test.before((t) => {
-
-	return rmdir("test/generated", { recursive: true });
-
-});
 
 test("can import glsl", (t) => {
 
