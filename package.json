@@ -67,6 +67,9 @@
 			]
 		}
 	},
+	"engines": {
+		"node": ">= 0.14.0"
+	},
 	"peerDependencies": {
 		"esbuild": "0.x.x"
 	},
