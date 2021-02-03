@@ -1,5 +1,6 @@
 import { OnLoadResult, Plugin, PluginBuild } from "esbuild";
-import * as fs from "fs/promises";
+import * as fs from "fs";
+import * as util from "util";
 import { minifyShader } from "./minifyShader";
 
 /**
@@ -21,13 +22,15 @@ export interface GLSLOptions {
 
 export default function({ minify = false }: GLSLOptions = {}): Plugin {
 
+	const readFile = util.promisify(fs.readFile);
+
 	return {
 		name: "glsl",
 		setup(build: PluginBuild) {
 
 			build.onLoad({ filter: /\.(?:frag|vert|glsl)$/ }, async(args): Promise<OnLoadResult> => {
 
-				const source = await fs.readFile(args.path, "utf8");
+				const source = await readFile(args.path, "utf8");
 
 				return {
 					contents: minify ? minifyShader(source) : source,
