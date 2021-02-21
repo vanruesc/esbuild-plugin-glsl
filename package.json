@@ -9,6 +9,7 @@
 		"import": "./dist/esbuild-plugin-glsl.js",
 		"require": "./dist/esbuild-plugin-glsl.cjs"
 	},
+	"type": "module",
 	"sideEffects": false,
 	"license": "Zlib",
 	"keywords": [
