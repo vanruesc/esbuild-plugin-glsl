@@ -1,8 +1,8 @@
-import { build } from "esbuild";
+import esbuild from "esbuild";
 import * as fs from "fs";
 import * as util from "util";
 import test from "ava";
-import glsl from "../";
+import glsl from "../dist/esbuild-plugin-glsl.js";
 
 const EOL = /(?:\\r\\n|\\r|\\n)/g;
 const readFile = util.promisify(fs.readFile);
@@ -18,7 +18,7 @@ test("can import glsl", (t) => {
 		plugins: [glsl()]
 	};
 
-	return build(config).then(async () => {
+	return esbuild.build(config).then(async () => {
 
 		const actual = await readFile("test/generated/bundle.js", "utf8");
 		const expected = await readFile("test/expected/bundle.js", "utf8");
@@ -41,7 +41,7 @@ test("can minify glsl", (t) => {
 		plugins: [glsl({ minify: true })]
 	};
 
-	return build(config).then(async () => {
+	return esbuild.build(config).then(async () => {
 
 		const actual = await readFile("test/generated/bundle.min.js", "utf8");
 		const expected = await readFile("test/expected/bundle.min.js", "utf8");

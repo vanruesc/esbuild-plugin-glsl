@@ -1,11 +1,5 @@
 {
-	"ts-node": {
-		"transpileOnly": true,
-		"compilerOptions": {
-			"module": "CommonJS"
-		},
-		"include": ["./*.ts"]
-	},
+	"include": ["./src"],
 	"compilerOptions": {
 		"rootDir": "./src",
 		"moduleResolution": "node",
@@ -16,6 +10,5 @@
 		"removeComments": true,
 		"skipLibCheck": true,
 		"strictNullChecks": false
-	},
-	"include": ["./src"]
+	}
 }
