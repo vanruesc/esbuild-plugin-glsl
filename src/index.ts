@@ -20,7 +20,7 @@ export interface GLSLOptions {
  * @return The plugin.
  */
 
-export default function({ minify = false }: GLSLOptions = {}): Plugin {
+function glsl({ minify = false }: GLSLOptions = {}): Plugin {
 
 	const readFile = util.promisify(fs.readFile);
 
@@ -43,3 +43,5 @@ export default function({ minify = false }: GLSLOptions = {}): Plugin {
 	};
 
 }
+
+export { glsl, glsl as default };
