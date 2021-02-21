@@ -15,7 +15,7 @@ npm install esbuild-plugin-glsl
 
 ```js
 import { build } from "esbuild";
-import glsl from "esbuild-plugin-glsl";
+import { glsl } from "esbuild-plugin-glsl";
 
 build({
 	entryPoints: ["input.js"],
