@@ -14,10 +14,10 @@ const banner = `/**
 
 const common = {
 	entryPoints: ["src/index.ts"],
+	banner: { js: banner },
 	platform: "node",
 	bundle: true,
-	minify: true,
-	banner
+	minify: true
 };
 
 const configs = [{
