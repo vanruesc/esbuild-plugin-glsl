@@ -16,6 +16,7 @@ const common = {
 	entryPoints: ["src/index.ts"],
 	banner: { js: banner },
 	platform: "node",
+	logLevel: "info",
 	bundle: true,
 	minify: true
 };
@@ -28,8 +29,8 @@ const configs = [{
 	format: "cjs"
 }];
 
-const t0 = Date.now();
+for(const c of configs) {
 
-await Promise.all(configs.map(c => esbuild.build(Object.assign(c, common))
-	.then(() => console.log(`Built ${c.outfile} in ${Date.now() - t0}ms`))
-	.catch(() => process.exit(1))));
+	void esbuild.build(Object.assign(c, common));
+
+}
