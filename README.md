@@ -27,6 +27,17 @@ build({
 }).catch(() => process.exit(1));
 ```
 
+### TypeScript usage
+
+To make the TypeScript compiler know how to handle GLSL files, add a `.d.ts` file to your project:
+
+```ts
+declare module '*.glsl' {
+  const value: string;
+  export default value;
+}
+```
+
 ## Contributing
 
 Use the issue tracker to propose and discuss changes. Maintain the existing coding style. Lint and test your code.
