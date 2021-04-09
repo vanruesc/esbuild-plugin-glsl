@@ -21,16 +21,12 @@ const common = {
 	minify: true
 };
 
-const configs = [{
+await esbuild.build(Object.assign({
 	outfile: `dist/${pkg.name}.js`,
 	format: "esm"
-}, {
+}, common)).catch(() => process.exit(1));
+
+await esbuild.build(Object.assign({
 	outfile: `dist/${pkg.name}.cjs`,
 	format: "cjs"
-}];
-
-for(const c of configs) {
-
-	void esbuild.build(Object.assign(c, common));
-
-}
+}, common)).catch(() => process.exit(1));
