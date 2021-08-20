@@ -1,4 +1,4 @@
-import { OnLoadResult, Plugin, PluginBuild } from "esbuild";
+import { OnLoadArgs, OnLoadResult, Plugin, PluginBuild } from "esbuild";
 import * as fs from "fs";
 import * as util from "util";
 import { minifyShader } from "./minifyShader";
@@ -28,7 +28,7 @@ function glsl({ minify = false }: GLSLOptions = {}): Plugin {
 		name: "glsl",
 		setup(build: PluginBuild) {
 
-			build.onLoad({ filter: /\.(?:frag|vert|glsl)$/ }, async(args): Promise<OnLoadResult> => {
+			async function onLoad(args: OnLoadArgs): Promise<OnLoadResult> {
 
 				const source = await readFile(args.path, "utf8");
 
@@ -37,7 +37,9 @@ function glsl({ minify = false }: GLSLOptions = {}): Plugin {
 					loader: "text"
 				};
 
-			});
+			}
+
+			build.onLoad({ filter: /\.(?:frag|vert|glsl)$/ }, onLoad);
 
 		}
 	};
