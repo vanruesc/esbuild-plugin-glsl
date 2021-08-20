@@ -29,7 +29,7 @@ build({
 
 ### TypeScript
 
-To make the TypeScript compiler know how to handle GLSL files, add a `.d.ts` file to your project:
+To make the TypeScript compiler know how to handle GLSL files, add a `glsl.d.ts` file to your project:
 
 ```ts
 declare module "*.glsl" {
