@@ -69,6 +69,7 @@
 		"esbuild": "0.x.x"
 	},
 	"devDependencies": {
+		"@types/node": "16.x.x",
 		"@typescript-eslint/eslint-plugin": "4.x.x",
 		"@typescript-eslint/parser": "4.x.x",
 		"ava": "3.x.x",
