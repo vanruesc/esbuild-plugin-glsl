@@ -2,4 +2,5 @@
 * text=auto
 
 # Linguist language statistics
-dist/* linguist-generated
+test/expected/* linguist-generated
+test/generated/* linguist-generated
