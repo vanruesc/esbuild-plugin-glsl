@@ -1,6 +1,6 @@
 {
 	"name": "esbuild-plugin-glsl",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "A GLSL plugin for esbuild.",
 	"homepage": "https://github.com/vanruesc/esbuild-plugin-glsl",
 	"main": "dist/esbuild-plugin-glsl.cjs",
