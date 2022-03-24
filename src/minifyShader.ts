@@ -10,7 +10,7 @@
 export function minifyShader(source: string): string {
 
 	const commentsRegExp = /[ \t]*(?:(?:\/\*[\s\S]*?\*\/)|(?:\/\/.*\n))/g;
-	const symbolsRegExp = /\s*({|}|=|\*|,|\+|\/|>|<|&|\||\[|\]|\(|\)|-|!|;)\s*/g;
+	const symbolsRegExp = /\s*([{}=*,+/><&|[\]()\-!?:;])\s*/g;
 
 	let result = source.replace(/\r/g, "").replace(commentsRegExp, "");
 	let wrap = false;
