@@ -39,7 +39,7 @@ function glsl({ minify = false }: GLSLOptions = {}): Plugin {
 
 			}
 
-			build.onLoad({ filter: /\.(?:frag|vert|glsl)$/ }, onLoad);
+			build.onLoad({ filter: /\.(?:frag|vert|glsl|wgsl)$/ }, onLoad);
 
 		}
 	};
