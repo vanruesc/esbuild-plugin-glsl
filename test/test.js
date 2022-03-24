@@ -2,7 +2,7 @@ import esbuild from "esbuild";
 import * as fs from "fs";
 import * as util from "util";
 import test from "ava";
-import glsl from "../dist/esbuild-plugin-glsl.js";
+import glsl from "esbuild-plugin-glsl";
 
 const EOL = /(?:\\r\\n|\\r|\\n)/g;
 const readFile = util.promisify(fs.readFile);

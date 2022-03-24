@@ -58,4 +58,6 @@ void main() {
 		gl_FragColor.b = 1.0;
 	}
 
+	gl_FragColor.a = (taps == 42) ? 1.0 : 0.0;
+
 }
