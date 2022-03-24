@@ -3,7 +3,7 @@
 [![CI](https://badgen.net/github/checks/vanruesc/esbuild-plugin-glsl/main)](https://github.com/vanruesc/esbuild-plugin-glsl/actions)
 [![Version](https://badgen.net/npm/v/esbuild-plugin-glsl?color=green)](https://www.npmjs.com/package/esbuild-plugin-glsl)
 
-An [esbuild](https://esbuild.github.io/) [plugin](https://esbuild.github.io/plugins/) that adds support for `.frag`, `.vert` and `.glsl` [file imports](https://esbuild.github.io/content-types/#text) with optional shader minification.
+An [esbuild](https://esbuild.github.io/) [plugin](https://esbuild.github.io/plugins/) that adds support for `.frag`, `.vert`, `.glsl` and `.wgsl` [file imports](https://esbuild.github.io/content-types/#text) with optional shader minification.
 
 ## Installation
 
@@ -29,9 +29,14 @@ build({
 
 ### TypeScript
 
-To make the TypeScript compiler know how to handle GLSL files, add a `glsl.d.ts` file to your project:
+To make the TypeScript compiler know how to handle shader sources, add a `shaders.d.ts` file to your project:
 
 ```ts
+declare module "*.wgsl" {
+	const value: string;
+	export default value;
+}
+
 declare module "*.glsl" {
 	const value: string;
 	export default value;
