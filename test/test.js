@@ -51,3 +51,22 @@ test("can minify glsl", (t) => {
 	});
 
 });
+
+test("can mangle glsl", (t) => {
+  const config = {
+    entryPoints: ["test/src/index.ts"],
+    outfile: "test/generated/bundle.mangled.js",
+    platform: "node",
+    format: "esm",
+    bundle: true,
+    minify: true,
+    plugins: [glsl({ minify: true, mangle: true })],
+  };
+
+  return esbuild.build(config).then(async () => {
+    const actual = await readFile("test/generated/bundle.mangled.js", "utf8");
+    const expected = await readFile("test/expected/bundle.mangled.js", "utf8");
+
+    t.is(actual.replace(EOL, ""), expected.replace(EOL, ""));
+  });
+});

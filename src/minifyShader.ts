@@ -1,3 +1,5 @@
+import { mangle as minifyIds } from "./mangle";
+
 /**
  * Minifies the given GLSL source code.
  *
@@ -7,7 +9,7 @@
  * @return The minified code.
  */
 
-export function minifyShader(source: string): string {
+export function minifyShader(source: string, mangle: boolean): string {
 
 	const commentsRegExp = /[ \t]*(?:(?:\/\*[\s\S]*?\*\/)|(?:\/\/.*\n))/g;
 	const symbolsRegExp = /\s*([{}=*,+/><&|[\]()\-!?:;])\s*/g;
@@ -33,6 +35,12 @@ export function minifyShader(source: string): string {
 		} else {
 
 			line = line.replace(/(else)$/m, "$1 ");
+			line = line.replace(symbolsRegExp, "$1");
+			if(mangle) {
+
+				line = minifyIds(line);
+
+			}
 			acc.push(line.replace(symbolsRegExp, "$1"));
 			wrap = true;
 
@@ -45,3 +53,4 @@ export function minifyShader(source: string): string {
 	return result.replace(/\n{2,}/g, "\n");
 
 }
+

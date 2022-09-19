@@ -11,6 +11,8 @@ export interface GLSLOptions {
 
 	minify?: boolean;
 
+	mangle?: boolean;
+
 }
 
 /**
@@ -20,7 +22,7 @@ export interface GLSLOptions {
  * @return The plugin.
  */
 
-function glsl({ minify = false }: GLSLOptions = {}): Plugin {
+function glsl({ minify = false, mangle = false }: GLSLOptions = {}): Plugin {
 
 	const readFile = util.promisify(fs.readFile);
 
@@ -33,7 +35,7 @@ function glsl({ minify = false }: GLSLOptions = {}): Plugin {
 				const source = await readFile(args.path, "utf8");
 
 				return {
-					contents: minify ? minifyShader(source) : source,
+					contents: minify ? minifyShader(source, mangle) : source,
 					loader: "text"
 				};
 

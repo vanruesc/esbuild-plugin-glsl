@@ -27,6 +27,23 @@ build({
 }).catch(() => process.exit(1));
 ```
 
+To mangle and rename variables, you can use `mangle` option. It is a primitive mangler that only renames variables and does not perform any optimizations. It respect the list of reserved words and attribute naming conventions. It is useful for obfuscating shaders. It only works together with `minify` option.
+
+```js
+import { build } from "esbuild";
+import { glsl } from "esbuild-plugin-glsl";
+
+build({
+	entryPoints: ["input.js"],
+	outfile: "output.js",
+	bundle: true,
+	plugins: [glsl({
+		minify: true,
+		mangle: true
+	})]
+}).catch(() => process.exit(1));
+```
+
 ### TypeScript
 
 To make the TypeScript compiler know how to handle shader sources, add a `shaders.d.ts` file to your project:
