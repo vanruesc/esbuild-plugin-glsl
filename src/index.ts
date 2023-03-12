@@ -1,7 +1,7 @@
 import { OnLoadArgs, OnLoadResult, Plugin, PluginBuild } from "esbuild";
 import * as fs from "fs";
 import * as util from "util";
-import { minifyShader } from "./minifyShader";
+import { minifyShader } from "./minifyShader.js";
 
 /**
  * GLSL plugin options.
