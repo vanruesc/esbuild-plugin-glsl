@@ -7,11 +7,11 @@ import glsl from "esbuild-plugin-glsl";
 const EOL = /(?:\\r\\n|\\r|\\n)/g;
 const readFile = util.promisify(fs.readFile);
 
-test("can import glsl", (t) => {
+test("can import glsl", async (t) => {
 
 	const config = {
-		entryPoints: ["test/src/index.ts"],
-		outfile: "test/generated/bundle.js",
+		entryPoints: ["test/src/glsl.ts"],
+		outfile: "test/generated/glsl.js",
 		platform: "node",
 		format: "esm",
 		bundle: true,
@@ -20,8 +20,8 @@ test("can import glsl", (t) => {
 
 	return esbuild.build(config).then(async () => {
 
-		const actual = await readFile("test/generated/bundle.js", "utf8");
-		const expected = await readFile("test/expected/bundle.js", "utf8");
+		const actual = await readFile("test/generated/glsl.js", "utf8");
+		const expected = await readFile("test/expected/glsl.js", "utf8");
 
 		t.is(actual.replace(EOL, ""), expected.replace(EOL, ""));
 
@@ -29,11 +29,11 @@ test("can import glsl", (t) => {
 
 });
 
-test("can minify glsl", (t) => {
+test("can minify glsl", async (t) => {
 
 	const config = {
-		entryPoints: ["test/src/index.ts"],
-		outfile: "test/generated/bundle.min.js",
+		entryPoints: ["test/src/glsl.ts"],
+		outfile: "test/generated/glsl.min.js",
 		platform: "node",
 		format: "esm",
 		bundle: true,
@@ -43,8 +43,31 @@ test("can minify glsl", (t) => {
 
 	return esbuild.build(config).then(async () => {
 
-		const actual = await readFile("test/generated/bundle.min.js", "utf8");
-		const expected = await readFile("test/expected/bundle.min.js", "utf8");
+		const actual = await readFile("test/generated/glsl.min.js", "utf8");
+		const expected = await readFile("test/expected/glsl.min.js", "utf8");
+
+		t.is(actual.replace(EOL, ""), expected.replace(EOL, ""));
+
+	});
+
+});
+
+test("can minify wgsl", async (t) => {
+
+	const config = {
+		entryPoints: ["test/src/wgsl.ts"],
+		outfile: "test/generated/wgsl.min.js",
+		platform: "node",
+		format: "esm",
+		bundle: true,
+		minify: true,
+		plugins: [glsl({ minify: true })]
+	};
+
+	return esbuild.build(config).then(async () => {
+
+		const actual = await readFile("test/generated/wgsl.min.js", "utf8");
+		const expected = await readFile("test/expected/wgsl.min.js", "utf8");
 
 		t.is(actual.replace(EOL, ""), expected.replace(EOL, ""));
 
