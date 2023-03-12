@@ -1,13 +1,15 @@
 {
-	"include": ["./src"],
+	"include": ["./src", "./test"],
 	"compilerOptions": {
-		"rootDir": "./src",
+		"rootDir": ".",
+		"baseUrl": ".",
 		"moduleResolution": "node",
 		"module": "ESNext",
 		"target": "ESNext",
 		"strict": true,
 		"sourceMap": false,
+		"importHelpers": true,
 		"skipLibCheck": true,
-		"strictNullChecks": false
+		"strictNullChecks": true
 	}
 }

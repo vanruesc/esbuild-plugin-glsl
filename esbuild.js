@@ -20,7 +20,7 @@ await esbuild.build({
 	format: "esm",
 	bundle: true,
 	minify: true
-}).catch(() => process.exit(1));
+});
 
 await esbuild.build({
 	entryPoints: ["src/index.ts"],
@@ -31,4 +31,4 @@ await esbuild.build({
 	format: "cjs",
 	bundle: true,
 	minify: true
-}).catch(() => process.exit(1));
+});
