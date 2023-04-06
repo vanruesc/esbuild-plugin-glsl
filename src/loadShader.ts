@@ -29,7 +29,7 @@ export async function load(filePath: string, cache: Map<string, string>)
 
 	cache.set(filePath, source);
 
-	const importPattern = /#include ["']([.\\/\w_-]+)["']/gi;
+	const importPattern = /#include +["']([.\\/\w-]+)["']/g;
 
 	let match = importPattern.exec(source);
 	while(match !== null) {
