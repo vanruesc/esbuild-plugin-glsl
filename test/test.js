@@ -74,3 +74,25 @@ test("can minify wgsl", async (t) => {
 	});
 
 });
+
+test("can use include", async (t) => {
+
+	const config = {
+		entryPoints: ["test/src/include.ts"],
+		outfile: "test/generated/include.js",
+		platform: "node",
+		format: "esm",
+		bundle: true,
+		plugins: [glsl()]
+	};
+
+	return esbuild.build(config).then(async() => {
+
+		const actual = await readFile("test/generated/include.js", "utf8");
+		const expected = await readFile("test/expected/include.js", "utf8");
+
+		t.is(actual.replace(EOL, ""), expected.replace(EOL, ""));
+
+	});
+
+});
