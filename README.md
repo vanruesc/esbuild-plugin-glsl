@@ -24,8 +24,13 @@ build({
 	plugins: [glsl({
 		minify: true
 	})]
-}).catch(() => process.exit(1));
+});
 ```
+
+### Options
+
+* `minify`: Enables or disables basic shader minification. Default is `false`.
+* `resolveIncludes`: When enabled, shaders can include other shaders with the custom `#include "path"` directive. Default is `true`.
 
 ### TypeScript
 
