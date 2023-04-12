@@ -1,55 +1,68 @@
 import * as fs from "fs";
 import * as util from "util";
 import * as path from "path";
-import { PartialMessage } from "esbuild";
+import { OnLoadResult, PartialMessage } from "esbuild";
 
 const readFile = util.promisify(fs.readFile);
+const importPattern = /#include +["']([.\\/\w-]+)["']/g;
+const linebreakRegex = /\r|\n|\r\n/g;
+
+interface ShaderInclude {
+
+	file: string,
+	contents: string,
+	target: string
+
+}
 
 /**
  * Loads and parses the given GLSL source code.
  *
  * Based on https://github.com/ricardomatias/esbuild-plugin-glsl-include
  *
- * @param filePath The path of the file.
- * @param cache A map to avoid unnecessary file loads.
+ * @param filePath - The path of the file.
+ * @param cache - A collection of shader includes that have already been loaded.
  * @return An object that contains:
- * * source: the parsed code
- * * warnings: any log messages generated during path resolution and a set of watch files.
- * * watchFiles: additional file system paths for esbuild's watch mode to scan.
+ * * `contents`: The parsed code.
+ * * `warnings`: Any log messages generated during path resolution.
+ * * `watchFiles`: Additional file system paths for esbuild's watch mode to scan.
  */
 
-export async function load(filePath: string, cache: Map<string, string>)
-	: Promise<{source: string;warnings: PartialMessage[], watchFiles: Set<string>}> {
+export async function load(filePath: string, cache: Map<string, string>,
+	resolveIncludes: boolean): Promise<OnLoadResult> {
 
-	let source = await readFile(filePath, "utf8");
+	let contents = await readFile(filePath, "utf8");
 
-	const includes = new Array<{file: string, contents: string, target:string}>();
-	const warnings = new Array<PartialMessage>();
+	if(!resolveIncludes) {
+
+		return { contents };
+
+	}
+
+	const includes: ShaderInclude[] = [];
+	const warnings: PartialMessage[] = [];
 	const watchFiles = new Set<string>();
 
-	cache.set(filePath, source);
+	cache.set(filePath, contents);
 
-	const importPattern = /#include +["']([.\\/\w-]+)["']/g;
-
-	let match = importPattern.exec(source);
+	let match = importPattern.exec(contents);
 	while(match !== null) {
 
 		const pragma = match[0];
-		const filename = match[1];
-		const file = path.join(path.dirname(filePath), filename);
+		const fileName = match[1];
+		const file = path.join(path.dirname(filePath), fileName);
 
 		try {
 
-			let contents = cache.get(file);
-			if(contents === undefined) {
+			if(!cache.has(file)) {
 
-				const inner = await load(file, cache);
+				const inner = await load(file, cache, resolveIncludes);
 
-				inner.warnings.forEach((w) => warnings.push(w));
-				inner.watchFiles.forEach((w) => watchFiles.add(w));
+				inner.warnings?.forEach((w) => warnings.push(w));
+				inner.watchFiles?.forEach((w) => watchFiles.add(w));
 
-				contents = inner.source;
-				cache.set(file, inner.source);
+				contents = inner.contents as string;
+				cache.set(file, contents);
 
 			}
 
@@ -60,23 +73,27 @@ export async function load(filePath: string, cache: Map<string, string>)
 			});
 
 			watchFiles.add(file);
-
-			match = importPattern.exec(source);
+			match = importPattern.exec(contents);
 
 		} catch(err) {
 
-			if(match === null) { continue; }
-			const lines = source.split(/\r|\n|\r\n/g);
+			if(match === null) {
+
+				break;
+
+			}
+
+			const lines = contents.split(linebreakRegex);
 			const lineIndex = lines.indexOf(match[0]);
 			const lineText = lines[lineIndex];
 
 			warnings.push({
 				text: `File from <${match[0]}> not found`,
 				location: {
-					file: filename,
+					file: fileName,
 					line: lineIndex + 1,
-					length: filename.length,
-					column: lineText.indexOf(filename),
+					length: fileName.length,
+					column: lineText.indexOf(fileName),
 					lineText
 				}
 			});
@@ -87,19 +104,18 @@ export async function load(filePath: string, cache: Map<string, string>)
 				target: match[0]
 			});
 
-			match = importPattern.exec(source);
+			match = importPattern.exec(contents);
 
 		}
 
 	}
 
-	for(let index = 0; index < includes.length; index++) {
+	for(const include of includes) {
 
-		const include = includes[index];
-		source = source.replace(include.target, include.contents);
+		contents = contents.replace(include.target, include.contents);
 
 	}
 
-	return { source, warnings, watchFiles };
+	return { contents, warnings, watchFiles: [...watchFiles] };
 
 }

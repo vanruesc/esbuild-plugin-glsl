@@ -8,7 +8,22 @@ import { load } from "./loadShader.js";
 
 export interface GLSLOptions {
 
+	/**
+	 * Enables or disables shader minification.
+	 *
+	 * Default is `false`.
+	 */
+
 	minify?: boolean;
+
+	/**
+	 * Enables or disables shader include resolution.
+	 * When enabled, shaders can be included with the custom `#include "path"` directive.
+	 *
+	 * Default is `true`.
+	 */
+
+	resolveIncludes?: boolean;
 
 }
 
@@ -19,7 +34,7 @@ export interface GLSLOptions {
  * @return The plugin.
  */
 
-function glsl({ minify = false }: GLSLOptions = {}): Plugin {
+function glsl({ minify = false, resolveIncludes = true }: GLSLOptions = {}): Plugin {
 
 	const cache = new Map<string, string>();
 
@@ -29,12 +44,12 @@ function glsl({ minify = false }: GLSLOptions = {}): Plugin {
 
 			async function onLoad(args: OnLoadArgs): Promise<OnLoadResult> {
 
-				const { source, warnings, watchFiles } = await load(args.path, cache);
+				const { contents, warnings, watchFiles } = await load(args.path, cache, resolveIncludes);
 
 				return {
-					contents: minify ? minifyShader(source) : source,
+					contents: minify ? minifyShader(contents as string) : contents,
 					warnings,
-					watchFiles: [...watchFiles],
+					watchFiles,
 					loader: "text"
 				};
 
