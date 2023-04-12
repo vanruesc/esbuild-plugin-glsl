@@ -29,8 +29,10 @@ build({
 
 ### Options
 
-* `minify`: Enables or disables basic shader minification. Default is `false`.
-* `resolveIncludes`: When enabled, shaders can include other shaders with the custom `#include "path"` directive. Default is `true`.
+| Option | Description | Default |
+|--------|-------------|---------|
+| minify | Enables or disables basic shader minification. | `false` |
+| resolveIncludes | When enabled, shaders can include other shaders with the custom `#include "path"` directive. | `true`  |
 
 ### TypeScript
 
