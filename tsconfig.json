@@ -1,15 +1,21 @@
 {
 	"include": ["./src", "./test"],
+	"exclude": ["./test/expected", "./test/generated"],
 	"compilerOptions": {
 		"rootDir": ".",
 		"baseUrl": ".",
+		"outDir": "./dist",
 		"moduleResolution": "node",
 		"module": "ESNext",
 		"target": "ESNext",
 		"strict": true,
+		"allowJs": true,
 		"sourceMap": false,
 		"importHelpers": true,
 		"skipLibCheck": true,
-		"strictNullChecks": true
+		"strictNullChecks": true,
+		"paths": {
+			"esbuild-plugin-glsl": ["./src/index.js"]
+		}
 	}
 }
