@@ -12,8 +12,7 @@
 		"allowJs": true,
 		"sourceMap": false,
 		"importHelpers": true,
-		"skipLibCheck": true,
-		"strictNullChecks": true,
+		"skipLibCheck": true
 		"paths": {
 			"esbuild-plugin-glsl": ["./src/index.js"]
 		}
