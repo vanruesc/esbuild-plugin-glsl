@@ -1,4 +1,4 @@
-import esbuild from "esbuild";
+import { build } from "esbuild";
 import * as fs from "fs";
 import * as util from "util";
 import test from "ava";
@@ -7,7 +7,7 @@ import glsl from "esbuild-plugin-glsl";
 const EOL = /(?:\\r\\n|\\r|\\n)/g;
 const readFile = util.promisify(fs.readFile);
 
-test("can import glsl", async (t) => {
+test("can import glsl", async(t) => {
 
 	const config = {
 		entryPoints: ["test/src/glsl.ts"],
@@ -18,7 +18,7 @@ test("can import glsl", async (t) => {
 		plugins: [glsl()]
 	};
 
-	return esbuild.build(config).then(async () => {
+	return build(config).then(async() => {
 
 		const actual = await readFile("test/generated/glsl.js", "utf8");
 		const expected = await readFile("test/expected/glsl.js", "utf8");
@@ -29,7 +29,7 @@ test("can import glsl", async (t) => {
 
 });
 
-test("can minify glsl", async (t) => {
+test("can minify glsl", async(t) => {
 
 	const config = {
 		entryPoints: ["test/src/glsl.ts"],
@@ -41,7 +41,7 @@ test("can minify glsl", async (t) => {
 		plugins: [glsl({ minify: true })]
 	};
 
-	return esbuild.build(config).then(async () => {
+	return build(config).then(async() => {
 
 		const actual = await readFile("test/generated/glsl.min.js", "utf8");
 		const expected = await readFile("test/expected/glsl.min.js", "utf8");
@@ -52,7 +52,7 @@ test("can minify glsl", async (t) => {
 
 });
 
-test("can minify wgsl", async (t) => {
+test("can minify wgsl", async(t) => {
 
 	const config = {
 		entryPoints: ["test/src/wgsl.ts"],
@@ -64,7 +64,7 @@ test("can minify wgsl", async (t) => {
 		plugins: [glsl({ minify: true })]
 	};
 
-	return esbuild.build(config).then(async () => {
+	return build(config).then(async() => {
 
 		const actual = await readFile("test/generated/wgsl.min.js", "utf8");
 		const expected = await readFile("test/expected/wgsl.min.js", "utf8");
@@ -75,7 +75,7 @@ test("can minify wgsl", async (t) => {
 
 });
 
-test("can use include", async (t) => {
+test("can use include", async(t) => {
 
 	const config = {
 		entryPoints: ["test/src/include.ts"],
@@ -86,7 +86,7 @@ test("can use include", async (t) => {
 		plugins: [glsl()]
 	};
 
-	return esbuild.build(config).then(async() => {
+	return build(config).then(async() => {
 
 		const actual = await readFile("test/generated/include.js", "utf8");
 		const expected = await readFile("test/expected/include.js", "utf8");
