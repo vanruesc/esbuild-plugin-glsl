@@ -54,21 +54,23 @@ export async function load(filePath: string, cache: Map<string, string>,
 
 		try {
 
-			if(!cache.has(file)) {
+			let innerContents = cache.get(file);
+
+			if(innerContents === undefined) {
 
 				const inner = await load(file, cache, resolveIncludes);
 
 				inner.warnings?.forEach((w) => warnings.push(w));
 				inner.watchFiles?.forEach((w) => watchFiles.add(w));
 
-				contents = inner.contents as string;
-				cache.set(file, contents);
+				innerContents = inner.contents as string;
+				cache.set(file, innerContents);
 
 			}
 
 			includes.push({
 				file,
-				contents,
+				contents: innerContents,
 				target: pragma
 			});
 
