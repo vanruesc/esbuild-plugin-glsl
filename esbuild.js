@@ -3,17 +3,17 @@ import esbuild from "esbuild";
 
 const require = createRequire(import.meta.url);
 const pkg = require("./package");
-const date = (new Date()).toDateString();
+const date = new Date();
 const banner = `/**
- * ${pkg.name} v${pkg.version} build ${date}
+ * ${pkg.name} v${pkg.version} build ${date.toDateString()}
  * ${pkg.homepage}
- * Copyright ${date.slice(-4)} ${pkg.author.name}
+ * Copyright 2020 ${pkg.author.name}
  * @license ${pkg.license}
  */`;
 
 await esbuild.build({
 	entryPoints: ["src/index.ts"],
-	outfile: `dist/${pkg.name}.js`,
+	outfile: "dist/index.js",
 	banner: { js: banner },
 	platform: "node",
 	logLevel: "info",
@@ -24,7 +24,7 @@ await esbuild.build({
 
 await esbuild.build({
 	entryPoints: ["src/index.ts"],
-	outfile: `dist/${pkg.name}.cjs`,
+	outfile: "dist/index.cjs",
 	banner: { js: banner },
 	platform: "node",
 	logLevel: "info",
