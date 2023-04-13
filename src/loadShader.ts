@@ -4,8 +4,6 @@ import * as path from "path";
 import { OnLoadResult, PartialMessage } from "esbuild";
 
 const readFile = util.promisify(fs.readFile);
-const importPattern = /#include +["']([.\\/\w-]+)["']/g;
-const linebreakRegex = /\r|\n|\r\n/g;
 
 interface ShaderInclude {
 
@@ -44,6 +42,9 @@ export async function load(filePath: string, cache: Map<string, string>,
 	const watchFiles = new Set<string>();
 
 	cache.set(filePath, contents);
+
+	const importPattern = /#include +["']([.\\/\w-]+)["']/g;
+	const linebreakRegex = /\r|\n|\r\n/g;
 
 	let match = importPattern.exec(contents);
 	while(match !== null) {
