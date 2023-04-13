@@ -31,11 +31,11 @@ interface ShaderInclude {
 export async function load(filePath: string, cache: Map<string, string>,
 	resolveIncludes: boolean): Promise<OnLoadResult> {
 
-	let contents = await readFile(filePath, "utf8");
+	let sourceContents = await readFile(filePath, "utf8");
 
 	if(!resolveIncludes) {
 
-		return { contents };
+		return { contents: sourceContents };
 
 	}
 
@@ -43,9 +43,9 @@ export async function load(filePath: string, cache: Map<string, string>,
 	const warnings: PartialMessage[] = [];
 	const watchFiles = new Set<string>();
 
-	cache.set(filePath, contents);
+	cache.set(filePath, sourceContents);
 
-	let match = importPattern.exec(contents);
+	let match = importPattern.exec(sourceContents);
 	while(match !== null) {
 
 		const pragma = match[0];
@@ -54,15 +54,19 @@ export async function load(filePath: string, cache: Map<string, string>,
 
 		try {
 
+			let contents;
 			if(!cache.has(file)) {
 
 				const inner = await load(file, cache, resolveIncludes);
-
 				inner.warnings?.forEach((w) => warnings.push(w));
 				inner.watchFiles?.forEach((w) => watchFiles.add(w));
 
 				contents = inner.contents as string;
 				cache.set(file, contents);
+
+			} else {
+
+				contents = cache.get(file) as string;
 
 			}
 
@@ -73,7 +77,7 @@ export async function load(filePath: string, cache: Map<string, string>,
 			});
 
 			watchFiles.add(file);
-			match = importPattern.exec(contents);
+			match = importPattern.exec(sourceContents);
 
 		} catch(err) {
 
@@ -83,7 +87,7 @@ export async function load(filePath: string, cache: Map<string, string>,
 
 			}
 
-			const lines = contents.split(linebreakRegex);
+			const lines = sourceContents.split(linebreakRegex);
 			const lineIndex = lines.indexOf(match[0]);
 			const lineText = lines[lineIndex];
 
@@ -104,7 +108,7 @@ export async function load(filePath: string, cache: Map<string, string>,
 				target: match[0]
 			});
 
-			match = importPattern.exec(contents);
+			match = importPattern.exec(sourceContents);
 
 		}
 
@@ -112,10 +116,10 @@ export async function load(filePath: string, cache: Map<string, string>,
 
 	for(const include of includes) {
 
-		contents = contents.replace(include.target, include.contents);
+		sourceContents = sourceContents.replace(include.target, include.contents);
 
 	}
 
-	return { contents, warnings, watchFiles: [...watchFiles] };
+	return { contents: sourceContents, warnings, watchFiles: [...watchFiles] };
 
 }
