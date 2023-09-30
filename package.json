@@ -1,6 +1,6 @@
 {
 	"name": "esbuild-plugin-glsl",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"description": "A GLSL plugin for esbuild.",
 	"homepage": "https://github.com/vanruesc/esbuild-plugin-glsl",
 	"license": "Zlib",
