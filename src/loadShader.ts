@@ -116,7 +116,7 @@ export async function load(filePath: string, cache: Map<string, string>,
 		contents = contents.replace(include.target, include.contents);
 
 	}
-	
+
 	cache.set(filePath, contents);
 
 	return { contents, warnings, watchFiles: [...watchFiles] };
