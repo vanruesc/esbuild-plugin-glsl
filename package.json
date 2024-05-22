@@ -33,8 +33,7 @@
 		"email": "vanruesc@outlook.de"
 	},
 	"repository": {
-		"type": "git",
-		"url": "https://github.com/vanruesc/esbuild-plugin-glsl.git"
+		"url": "git+https://github.com/vanruesc/esbuild-plugin-glsl.git"
 	},
 	"bugs": {
 		"url": "https://github.com/vanruesc/esbuild-plugin-glsl/issues"
