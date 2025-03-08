@@ -41,6 +41,20 @@
 	"files": [
 		"dist"
 	],
+	"engines": {
+		"node": ">= 0.10.18"
+	},
+	"ava": {
+		"failFast": true,
+		"files": [
+			"test/*.js"
+		]
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
+	},
 	"scripts": {
 		"ava": "ava",
 		"build": "run-s build:*",
@@ -50,18 +64,6 @@
 		"lint": "tsc --noemit && eslint src --fix",
 		"prepublishOnly": "npm test",
 		"test": "run-s lint clean build ava"
-	},
-	"ava": {
-		"failFast": true,
-		"files": [
-			"test/*.js"
-		]
-	},
-	"eslintConfig": {
-		"extends": "aether/typescript"
-	},
-	"engines": {
-		"node": ">= 0.10.18"
 	},
 	"peerDependencies": {
 		"esbuild": "0.x.x"
