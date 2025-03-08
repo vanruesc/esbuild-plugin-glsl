@@ -21,7 +21,7 @@ export function minifyShader(source: string): string {
 
 		line = line.trim().replace(/\s{2,}|\t/, " ");
 
-		if(line[0] === "#") {
+		if(line.startsWith("#")) {
 
 			if(wrap) {
 
