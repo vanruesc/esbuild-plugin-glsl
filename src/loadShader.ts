@@ -46,10 +46,11 @@ export async function load(filePath: string, cache: Map<string, string>,
 	const warnings: PartialMessage[] = [];
 	const watchFiles = new Set<string>();
 
-	const importPattern = /#include +["']([.\\/\w-]+)["']/g;
-	const linebreakRegex = /\r|\n|\r\n/g;
+	const importPatternRegExp = /#include +["']([.\\/\w-]+)["']/g;
+	const linebreakRegExp = /\r|\n|\r\n/g;
 
-	let match = importPattern.exec(contents);
+	let match = importPatternRegExp.exec(contents);
+
 	while(match !== null) {
 
 		const pragma = match[0];
@@ -79,7 +80,7 @@ export async function load(filePath: string, cache: Map<string, string>,
 			});
 
 			watchFiles.add(file);
-			match = importPattern.exec(contents);
+			match = importPatternRegExp.exec(contents);
 
 		} catch(err) {
 
@@ -89,7 +90,7 @@ export async function load(filePath: string, cache: Map<string, string>,
 
 			}
 
-			const lines = contents.split(linebreakRegex);
+			const lines = contents.split(linebreakRegExp);
 			const lineIndex = lines.indexOf(match[0]);
 			const lineText = lines[lineIndex];
 
@@ -110,7 +111,7 @@ export async function load(filePath: string, cache: Map<string, string>,
 				target: match[0]
 			});
 
-			match = importPattern.exec(contents);
+			match = importPatternRegExp.exec(contents);
 
 		}
 
