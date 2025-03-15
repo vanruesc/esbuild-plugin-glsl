@@ -1,31 +1,82 @@
 /**
- * Minifies the given GLSL source code.
- *
- * Based on https://github.com/vwochnik/rollup-plugin-glsl
- *
- * @param source The source code.
- * @return The minified code.
+ * A comment that contains legal information.
  */
 
-export function minifyShader(source: string, legalComments: boolean): string {
+interface LegalComment {
 
-	const commentsRegExp = /[ \t]*(?:(?:\/\*[\s\S]*?\*\/)|(?:\/\/.*\n))/g;
-	const symbolsRegExp = /\s*([{}=*,+/><&|[\]()\\!?:;-])\s*/g;
-	const genericsRegExp = /(\w<\w+>)\s*(\w)/g;
-	let preservedLegalComments: { comment: string; placeholder: string; }[] = [];
+	contents: string,
+	placeholder: string
 
-	let result = source.replace(/\r/g, "");
+}
 
-	// Preserve legal comments to be restored at the end, if requested
-	if(legalComments) {
+/**
+ * Removes comments from the given source code.
+ *
+ * If `legalComments` is provided, legal comments will be gathered and replaced with placeholder tokens.
+ *
+ * @param source - The source code.
+ * @param legalComments - An optional array to be filled with legal comments. Default is `null`.
+ * @return The source code without comments.
+ */
 
-		const preserved = preserveLegalComments(result);
-		result = preserved.text;
-		preservedLegalComments = preserved.comments;
+function stripComments(source: string, legalComments: LegalComment[] | null = null): string {
+
+	const commentsRegExp = /^[ \t]*(?:(?:\/\*[\s\S]*?\*\/)|(?:\/\/.*\n))/gm;
+	const legalCommentRegExp = /^[ \t]*(?:\/[/*]!)|(?:@license)|(?:@preserve)/m;
+
+	if(legalComments === null) {
+
+		// No need to gather legal comments.
+		return source.replace(commentsRegExp, "");
 
 	}
 
-	result = result.replace(commentsRegExp, "");
+	let id = 0;
+
+	for(const comment of source.matchAll(commentsRegExp)) {
+
+		if(legalCommentRegExp.test(comment[0])) {
+
+			const placeholder = `[[LEGAL_COMMENT_${id++}]]`;
+
+			legalComments.push({
+				contents: comment[0],
+				placeholder
+			});
+
+			source = source.replace(comment[0], placeholder);
+
+		} else {
+
+			source = source.replace(comment[0], "");
+
+		}
+
+	}
+
+	return source;
+
+}
+
+/**
+ * Minifies the given source code.
+ *
+ * Based on https://github.com/vwochnik/rollup-plugin-glsl
+ *
+ * @param source - The source code.
+ * @param preserveLegalComments - Controls whether license comments should be preserved.
+ * @return The minified code.
+ */
+
+export function minifyShader(source: string, preserveLegalComments: boolean): string {
+
+	const symbolsRegExp = /\s*([{}=*,+/><&|[\]()\\!?:;-])\s*/g;
+	const genericsRegExp = /(\w<\w+>)\s*(\w)/g;
+
+	let result = source.replace(/\r/g, "");
+
+	const legalComments: LegalComment[] = [];
+	result = stripComments(result, preserveLegalComments ? legalComments : null);
 
 	let separatedBySymbol = true;
 	let wrap = false;
@@ -72,51 +123,12 @@ export function minifyShader(source: string, legalComments: boolean): string {
 
 	}, []).join("");
 
-	// Restore preserved legal comments, if requested
-	if(legalComments) {
+	for(const legalComment of legalComments) {
 
-		for(const legalComment of preservedLegalComments) {
-
-			result = result.replace(legalComment.placeholder, `\n${legalComment.comment}`);
-
-		}
+		result = result.replace(legalComment.placeholder, `\n${legalComment.contents.trim()}`);
 
 	}
-
 
 	return result.replace(/\n{2,}/g, "\n");
-
-}
-
-// Finds legal comments and replaces them with placeholder text
-function preserveLegalComments(text: string) {
-
-	const legalComments = [];
-
-	// Get all statement-level comments
-	const comments = text.matchAll(/^[ \t]*(?:(?:\/\/.*$)|(?:\/\*[\s\S]*?\*\/$))/gm);
-
-	let i = 0;
-
-	for(const comment of comments) {
-
-		if(/^[ \t]*\/[/*]!/gm.test(comment[0]) || comment[0].includes("@license") || comment[0].includes("@preserve")) {
-
-			const placeholder = `__LEGAL_COMMENT_${i}__`;
-			legalComments.push({
-				"comment": comment[0],
-				placeholder
-			});
-			text = text.replace(comment[0], placeholder);
-			i++;
-
-		}
-
-	}
-
-	return {
-		text,
-		comments: legalComments
-	};
 
 }
