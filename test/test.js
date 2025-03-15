@@ -61,7 +61,7 @@ test("can minify wgsl", async(t) => {
 		format: "esm",
 		bundle: true,
 		minify: true,
-		plugins: [glsl({ minify: true })]
+		plugins: [glsl({ minify: true, preserveLegalComments: false })]
 	};
 
 	return build(config).then(async() => {
@@ -107,7 +107,7 @@ test("can preserve legal comments", async(t) => {
 		bundle: true,
 		minify: true,
 		legalComments: "inline",
-		plugins: [glsl({ minify: true, legalComments: true })]
+		plugins: [glsl({ minify: true })]
 	};
 
 	return build(config).then(async() => {

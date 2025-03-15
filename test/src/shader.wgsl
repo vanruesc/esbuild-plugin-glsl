@@ -54,7 +54,7 @@ fn fragmentMain(
 
 //! This is a single-line legal comment
 /*!
-* This is a multi-line legal comment.
-*/
+ * This is a multi-line legal comment.
+ */
 // @license This is a comment that specifies a license.
 // @preserve This is a comment that should be preserved.
