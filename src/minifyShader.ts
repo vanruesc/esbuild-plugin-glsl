@@ -7,13 +7,26 @@
  * @return The minified code.
  */
 
-export function minifyShader(source: string): string {
+export function minifyShader(source: string, legalComments: boolean): string {
 
 	const commentsRegExp = /[ \t]*(?:(?:\/\*[\s\S]*?\*\/)|(?:\/\/.*\n))/g;
 	const symbolsRegExp = /\s*([{}=*,+/><&|[\]()\\!?:;-])\s*/g;
 	const genericsRegExp = /(\w<\w+>)\s*(\w)/g;
+	let preservedLegalComments: { comment: string; placeholder: string; }[] = [];
 
-	let result = source.replace(/\r/g, "").replace(commentsRegExp, "");
+	let result = source.replace(/\r/g, "");
+
+	// Preserve legal comments to be restored at the end, if requested
+	if(legalComments) {
+
+		const preserved = preserveLegalComments(result);
+		result = preserved.text;
+		preservedLegalComments = preserved.comments;
+
+	}
+
+	result = result.replace(commentsRegExp, "");
+
 	let separatedBySymbol = true;
 	let wrap = false;
 
@@ -59,6 +72,51 @@ export function minifyShader(source: string): string {
 
 	}, []).join("");
 
+	// Restore preserved legal comments, if requested
+	if(legalComments) {
+
+		for(const legalComment of preservedLegalComments) {
+
+			result = result.replace(legalComment.placeholder, `\n${legalComment.comment}`);
+
+		}
+
+	}
+
+
 	return result.replace(/\n{2,}/g, "\n");
+
+}
+
+// Finds legal comments and replaces them with placeholder text
+function preserveLegalComments(text: string) {
+
+	const legalComments = [];
+
+	// Get all statement-level comments
+	const comments = text.matchAll(/^[ \t]*(?:(?:\/\/.*$)|(?:\/\*[\s\S]*?\*\/$))/gm);
+
+	let i = 0;
+
+	for(const comment of comments) {
+
+		if(/^[ \t]*\/[/*]!/gm.test(comment[0]) || comment[0].includes("@license") || comment[0].includes("@preserve")) {
+
+			const placeholder = `__LEGAL_COMMENT_${i}__`;
+			legalComments.push({
+				"comment": comment[0],
+				placeholder
+			});
+			text = text.replace(comment[0], placeholder);
+			i++;
+
+		}
+
+	}
+
+	return {
+		text,
+		comments: legalComments
+	};
 
 }

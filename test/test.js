@@ -96,3 +96,27 @@ test("can use include", async(t) => {
 	});
 
 });
+
+test("can preserve legal comments", async(t) => {
+
+	const config = {
+		entryPoints: ["test/src/wgsl.ts"],
+		outfile: "test/generated/wgsl-legal.min.js",
+		platform: "node",
+		format: "esm",
+		bundle: true,
+		minify: true,
+		legalComments: "inline",
+		plugins: [glsl({ minify: true, legalComments: true })]
+	};
+
+	return build(config).then(async() => {
+
+		const actual = await readFile("test/generated/wgsl-legal.min.js", "utf8");
+		const expected = await readFile("test/expected/wgsl-legal.min.js", "utf8");
+
+		t.is(actual.replace(EOL, ""), expected.replace(EOL, ""));
+
+	});
+
+});

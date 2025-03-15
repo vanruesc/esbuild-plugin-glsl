@@ -33,6 +33,7 @@ build({
 |--------|-------------|---------|
 | minify | Enables or disables basic shader minification. | `false` |
 | resolveIncludes | When enabled, shaders can include other shaders with the custom `#include "path"` directive. | `true`  |
+| legalComments | When enabled, preserves comments starting with `//!` or `/*!` and comments containing `@license` or `@preserve`. | `false` |
 
 ### TypeScript
 

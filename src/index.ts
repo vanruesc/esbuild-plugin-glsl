@@ -25,6 +25,16 @@ export interface GLSLOptions {
 
 	resolveIncludes?: boolean;
 
+	/**
+	 * Enables or disables shader legal comment preservation.
+	 * When enabled, comments starting with `//!` or `/*!`, or comments with the
+	 * text `@license` or `@preserve`, will be preserved.
+	 *
+	 * Default is `false`.
+	 */
+
+	legalComments?: boolean;
+
 }
 
 /**
@@ -34,7 +44,7 @@ export interface GLSLOptions {
  * @return The plugin.
  */
 
-function glsl({ minify = false, resolveIncludes = true }: GLSLOptions = {}): Plugin {
+function glsl({ minify = false, resolveIncludes = true, legalComments = false }: GLSLOptions = {}): Plugin {
 
 	const cache = new Map<string, string>();
 
@@ -47,7 +57,7 @@ function glsl({ minify = false, resolveIncludes = true }: GLSLOptions = {}): Plu
 				const { contents, warnings, watchFiles } = await load(args.path, cache, resolveIncludes);
 
 				return {
-					contents: minify ? minifyShader(contents as string) : contents,
+					contents: minify ? minifyShader(contents as string, legalComments) : contents,
 					warnings,
 					watchFiles,
 					loader: "text"
