@@ -5,6 +5,10 @@ import { OnLoadResult, PartialMessage } from "esbuild";
 
 const readFile = util.promisify(fs.readFile);
 
+/**
+ * A container for included shader code.
+ */
+
 interface ShaderInclude {
 
 	file: string,
@@ -20,7 +24,8 @@ interface ShaderInclude {
  *
  * @param filePath - The path of the file.
  * @param cache - A collection of shader includes that have already been loaded.
- * @return An object that contains:
+ * @param resolveIncludes - Controls whether shader includes should be inlined.
+ * @return A promise that resolves with an object that contains:
  * * `contents`: The parsed code.
  * * `warnings`: Any log messages generated during path resolution.
  * * `watchFiles`: Additional file system paths for esbuild's watch mode to scan.
