@@ -33,7 +33,7 @@ export interface GLSLOptions {
 	 * Default is `false`.
 	 */
 
-	legalComments?: boolean;
+	preserveLegalComments?: boolean;
 
 }
 
@@ -44,7 +44,11 @@ export interface GLSLOptions {
  * @return The plugin.
  */
 
-function glsl({ minify = false, resolveIncludes = true, legalComments = false }: GLSLOptions = {}): Plugin {
+function glsl({
+	minify = false,
+	resolveIncludes = true,
+	preserveLegalComments = true
+}: GLSLOptions = {}): Plugin {
 
 	const cache = new Map<string, string>();
 
@@ -57,7 +61,7 @@ function glsl({ minify = false, resolveIncludes = true, legalComments = false }:
 				const { contents, warnings, watchFiles } = await load(args.path, cache, resolveIncludes);
 
 				return {
-					contents: minify ? minifyShader(contents as string, legalComments) : contents,
+					contents: minify ? minifyShader(contents as string, preserveLegalComments) : contents,
 					warnings,
 					watchFiles,
 					loader: "text"
