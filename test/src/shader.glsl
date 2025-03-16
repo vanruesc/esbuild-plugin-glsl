@@ -38,7 +38,7 @@ void main() {
 
 	for(int i = 0; i < SAMPLES_INT; ++i) {
 
-		++taps;
+		++taps; // Inline comment
 
 	}
 
