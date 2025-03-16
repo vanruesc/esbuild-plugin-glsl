@@ -41,7 +41,7 @@ export interface GLSLOptions {
 /**
  * An options wrapper function that returns the GLSL plugin.
  *
- * @param options The options.
+ * @param options - The options.
  * @return The plugin.
  */
 
