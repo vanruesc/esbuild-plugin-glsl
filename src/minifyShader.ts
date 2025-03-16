@@ -21,8 +21,8 @@ interface LegalComment {
 
 function stripComments(source: string, legalComments: LegalComment[] | null = null): string {
 
-	const commentsRegExp = /^[ \t]*(?:(?:\/\*[\s\S]*?\*\/)|(?:\/\/.*\n))/gm;
-	const legalCommentRegExp = /^[ \t]*(?:\/[/*]!)|(?:@license)|(?:@preserve)/m;
+	const commentsRegExp = /(?:\/\*[\s\S]*?\*\/)|(?:\/\/.*\n)/g;
+	const legalCommentRegExp = /(?:\/[/*]!)|(?:@license)|(?:@preserve)/m;
 
 	if(legalComments === null) {
 
