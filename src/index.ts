@@ -11,7 +11,7 @@ export interface GLSLOptions {
 	/**
 	 * Enables or disables shader minification.
 	 *
-	 * @defaultValue false
+	 * @defaultValue inherited from esbuild options, or false if not specified
 	 */
 
 	minify?: boolean;
@@ -31,7 +31,7 @@ export interface GLSLOptions {
 	 *
 	 * Legal comments either start with `//!` or `/*!` or include `@license` or `@preserve`.
 	 *
-	 * @defaultValue true
+	 * @defaultValue inherited from esbuild options, or true if not specified
 	 */
 
 	preserveLegalComments?: boolean;
@@ -46,9 +46,9 @@ export interface GLSLOptions {
  */
 
 function glsl({
-	minify = false,
+	minify,
 	resolveIncludes = true,
-	preserveLegalComments = true
+	preserveLegalComments
 }: GLSLOptions = {}): Plugin {
 
 	const cache = new Map<string, string>();
@@ -60,6 +60,9 @@ function glsl({
 			async function onLoad(args: OnLoadArgs): Promise<OnLoadResult> {
 
 				const { contents, warnings, watchFiles } = await load(args.path, cache, resolveIncludes);
+
+				minify ??= build.initialOptions.minify ?? false;
+				preserveLegalComments ??= build.initialOptions.legalComments !== "none";
 
 				return {
 					contents: minify ? minifyShader(contents as string, preserveLegalComments) : contents,
