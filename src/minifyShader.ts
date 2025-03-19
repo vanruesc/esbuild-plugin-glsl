@@ -37,6 +37,8 @@ function stripComments(source: string, legalComments: LegalComment[] | null = nu
 
 		if(legalCommentRegExp.test(comment[0])) {
 
+			comment[0].replace(/\n*$/g, "");
+
 			const placeholder = `[[LEGAL_COMMENT_${id++}]]`;
 
 			legalComments.push({
@@ -125,7 +127,7 @@ export function minifyShader(source: string, preserveLegalComments: boolean): st
 
 	for(const legalComment of legalComments) {
 
-		result = result.replace(legalComment.placeholder, `\n${legalComment.contents.trim()}`);
+		result = result.replace(legalComment.placeholder, `\n${legalComment.contents.trim()}\n`);
 
 	}
 
