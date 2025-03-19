@@ -37,8 +37,6 @@ function stripComments(source: string, legalComments: LegalComment[] | null = nu
 
 		if(legalCommentRegExp.test(comment[0])) {
 
-			comment[0].replace(/\n*$/g, "");
-
 			const placeholder = `[[LEGAL_COMMENT_${id++}]]`;
 
 			legalComments.push({
