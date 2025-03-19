@@ -48,6 +48,7 @@ fn fragmentMain(
 	}
 
 	// Return the accumulated surface color.
+	// @preserve This is a comment that should be preserved.
 	return vec4(surfaceColor, baseColor.a);
 
 }
@@ -57,4 +58,3 @@ fn fragmentMain(
  * This is a multi-line legal comment.
  */
 // @license This is a comment that specifies a license.
-// @preserve This is a comment that should be preserved.
