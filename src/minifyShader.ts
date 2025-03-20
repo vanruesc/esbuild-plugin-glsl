@@ -129,6 +129,6 @@ export function minifyShader(source: string, preserveLegalComments: boolean): st
 
 	}
 
-	return result.replace(/\n{2,}/g, "\n");
+	return result.replace(/\n{2,}/g, "\n").trim();
 
 }
