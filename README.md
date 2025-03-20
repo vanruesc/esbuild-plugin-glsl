@@ -29,11 +29,11 @@ build({
 
 ### Options
 
-| Option                | Description                                                                                  | Default                                               |
-|-----------------------|----------------------------------------------------------------------------------------------|-------------------------------------------------------|
-| minify                | Enables or disables basic shader minification.                                               | follows https://esbuild.github.io/api/#minify         |
-| resolveIncludes       | When enabled, shaders can include other shaders with the custom `#include "path"` directive. | `true`                                                |
-| preserveLegalComments | Preserves comments that start with `//!` or `/*!` or include `@license` or `@preserve`.      | follows https://esbuild.github.io/api/#legal-comments |
+| Option                | Description                                                                                  | Default                                                                 |
+|-----------------------|----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| minify                | Enables or disables basic shader minification.                                               | follows [minify](https://esbuild.github.io/api/#minify)                 |
+| resolveIncludes       | When enabled, shaders can include other shaders with the custom `#include "path"` directive. | `true`                                                                  |
+| preserveLegalComments | Preserves comments that start with `//!` or `/*!` or include `@license` or `@preserve`.      | follows [legal-comments](https://esbuild.github.io/api/#legal-comments) |
 
 ### TypeScript
 
