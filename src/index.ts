@@ -64,12 +64,9 @@ function glsl({
 				minify ??= build.initialOptions.minify ?? false;
 				preserveLegalComments ??= build.initialOptions.legalComments !== "none";
 
-				contents = minify
-					? `export default \`${minifyShader(contents as string, preserveLegalComments)}\``
-					: `export default \`${contents as string}\``;
-
-				minify ??= build.initialOptions.minify ?? false;
-				preserveLegalComments ??= build.initialOptions.legalComments !== "none";
+				contents = minify ?
+					`export default \`${minifyShader(contents as string, preserveLegalComments)}\`` :
+					`export default \`${contents as string}\``;
 
 				return {
 					contents,
