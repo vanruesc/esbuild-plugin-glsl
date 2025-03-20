@@ -3,7 +3,7 @@
 [![CI](https://badgen.net/github/checks/vanruesc/esbuild-plugin-glsl/main)](https://github.com/vanruesc/esbuild-plugin-glsl/actions)
 [![Version](https://badgen.net/npm/v/esbuild-plugin-glsl?color=green)](https://www.npmjs.com/package/esbuild-plugin-glsl)
 
-An [esbuild](https://esbuild.github.io/) [plugin](https://esbuild.github.io/plugins/) that adds support for `.frag`, `.vert`, `.glsl` and `.wgsl` [file imports](https://esbuild.github.io/content-types/#text) with optional shader minification.
+An [esbuild plugin](https://esbuild.github.io/plugins/) that adds support for `.frag`, `.vert`, `.glsl` and `.wgsl` [file imports](https://esbuild.github.io/content-types/#text) with optional shader minification.
 
 ## Installation
 
@@ -29,11 +29,11 @@ build({
 
 ### Options
 
-| Option                | Description                                                                                  | Default |
-|-----------------------|----------------------------------------------------------------------------------------------|---------|
-| minify                | Enables or disables basic shader minification.                                               | `false` |
-| resolveIncludes       | When enabled, shaders can include other shaders with the custom `#include "path"` directive. | `true`  |
-| preserveLegalComments | Preserves comments that start with `//!` or `/*!` or include `@license` or `@preserve`.      | `true`  |
+| Option                | Description                                                                                  | Default                                               |
+|-----------------------|----------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| minify                | Enables or disables basic shader minification.                                               | follows https://esbuild.github.io/api/#minify         |
+| resolveIncludes       | When enabled, shaders can include other shaders with the custom `#include "path"` directive. | `true`                                                |
+| preserveLegalComments | Preserves comments that start with `//!` or `/*!` or include `@license` or `@preserve`.      | follows https://esbuild.github.io/api/#legal-comments |
 
 ### TypeScript
 
