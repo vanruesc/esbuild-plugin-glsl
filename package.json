@@ -1,6 +1,6 @@
 {
 	"name": "esbuild-plugin-glsl",
-	"version": "1.3.2",
+	"version": "1.4.0",
 	"description": "An esbuild plugin that adds support for shader imports.",
 	"homepage": "https://github.com/vanruesc/esbuild-plugin-glsl",
 	"license": "Zlib",
