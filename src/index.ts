@@ -11,7 +11,7 @@ export interface GLSLOptions {
 	/**
 	 * Enables or disables shader minification.
 	 *
-	 * @defaultValue inherited from esbuild options, or false if not specified
+	 * Defaults to the value of {@link https://esbuild.github.io/api/#minify} if not specified.
 	 */
 
 	minify?: boolean;
@@ -31,7 +31,7 @@ export interface GLSLOptions {
 	 *
 	 * Legal comments either start with `//!` or `/*!` or include `@license` or `@preserve`.
 	 *
-	 * @defaultValue inherited from esbuild options, or true if not specified
+	 * The default value depends on {@link https://esbuild.github.io/api/#legal-comments} if not specified.
 	 */
 
 	preserveLegalComments?: boolean;
