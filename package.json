@@ -69,11 +69,11 @@
 		"esbuild": "0.x.x"
 	},
 	"devDependencies": {
-		"@types/node": "22.x.x",
+		"@types/node": "24.x.x",
 		"@typescript-eslint/eslint-plugin": "8.x.x",
 		"@typescript-eslint/parser": "8.x.x",
 		"ava": "6.x.x",
-		"del-cli": "6.x.x",
+		"del-cli": "7.x.x",
 		"esbuild": "0.25.x",
 		"eslint": "9.x.x",
 		"eslint-config-aether": "2.x.x",
