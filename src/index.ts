@@ -51,7 +51,6 @@ function glsl({
 	preserveLegalComments
 }: GLSLOptions = {}): Plugin {
 
-	const cache = new Map<string, string>();
 
 	return {
 		name: "glsl",
@@ -59,7 +58,7 @@ function glsl({
 
 			async function onLoad(args: OnLoadArgs): Promise<OnLoadResult> {
 
-				const data = await load(args.path, cache, resolveIncludes);
+				const data = await load(args.path, new Map(), resolveIncludes);
 				data.loader = "js";
 
 				minify ??= build.initialOptions.minify ?? false;
