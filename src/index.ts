@@ -45,12 +45,7 @@ export interface GLSLOptions {
  * @return The plugin.
  */
 
-function glsl({
-	minify,
-	resolveIncludes = true,
-	preserveLegalComments
-}: GLSLOptions = {}): Plugin {
-
+function glsl(options?: GLSLOptions): Plugin {
 
 	return {
 		name: "glsl",
@@ -58,11 +53,11 @@ function glsl({
 
 			async function onLoad(args: OnLoadArgs): Promise<OnLoadResult> {
 
-				const data = await load(args.path, new Map(), resolveIncludes);
+				const data = await load(args.path, new Map(), options?.resolveIncludes ?? true);
 				data.loader = "js";
 
-				minify ??= build.initialOptions.minify ?? false;
-				preserveLegalComments ??= build.initialOptions.legalComments !== "none";
+				const minify = options?.minify ?? build.initialOptions.minify ?? false;
+				const preserveLegalComments = options?.preserveLegalComments ?? build.initialOptions.legalComments !== "none";
 
 				data.contents = minify ?
 					`export default \`${minifyShader(data.contents as string, preserveLegalComments)}\`` :
