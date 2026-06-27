@@ -1,20 +1,32 @@
 {
-	"include": ["./src", "./test"],
-	"exclude": ["./test/expected", "./test/generated"],
+	"include": [
+		"./src",
+		"./test"
+	],
+	"exclude": [
+		"./test/expected",
+		"./test/generated"
+	],
 	"compilerOptions": {
+		// File Layout
 		"rootDir": ".",
-		"baseUrl": ".",
 		"outDir": "./dist",
-		"moduleResolution": "node",
-		"module": "esnext",
-		"target": "esnext",
-		"strict": true,
-		"allowJs": true,
-		"sourceMap": false,
-		"importHelpers": true,
-		"skipLibCheck": true,
 		"paths": {
 			"esbuild-plugin-glsl": ["./src/index.js"]
-		}
+		},
+		// Environment Settings
+		"moduleResolution": "bundler",
+		"module": "esnext",
+		"target": "es2025",
+		"types": ["node"],
+		// Style Options
+		"noImplicitReturns": true,
+		"noImplicitOverride": true,
+		// Other
+		"allowSyntheticDefaultImports": true,
+		"noUncheckedSideEffectImports": true,
+		"resolveJsonModule": true,
+		"sourceMap": false,
+		"skipLibCheck": true
 	}
 }

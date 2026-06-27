@@ -44,41 +44,29 @@
 	"engines": {
 		"node": ">= 18"
 	},
-	"ava": {
-		"failFast": true,
-		"files": [
-			"test/*.js"
-		]
-	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild"
-		]
-	},
 	"scripts": {
-		"ava": "ava",
 		"build": "run-s build:*",
 		"build:js": "node esbuild",
 		"build:dts": "tsc -p tsconfig.d.json",
 		"clean": "del-cli dist test/generated",
-		"lint": "tsc --noemit && eslint src --fix",
-		"prepublishOnly": "npm test",
-		"test": "run-s lint clean build ava"
+		"lint": "run-p lint:*",
+		"lint:js": "eslint --fix src test",
+		"lint:tsc": "tsc --noEmit",
+		"pretest": "run-s clean lint build",
+		"test": "node --import tsx --test test/test.ts",
+		"prepublishOnly": "run-s test"
 	},
 	"peerDependencies": {
 		"esbuild": "0.x.x"
 	},
 	"devDependencies": {
-		"@types/node": "24.x.x",
-		"@typescript-eslint/eslint-plugin": "8.x.x",
-		"@typescript-eslint/parser": "8.x.x",
-		"ava": "6.x.x",
+		"@types/node": "26.x.x",
 		"del-cli": "7.x.x",
-		"esbuild": "0.25.x",
-		"eslint": "9.x.x",
-		"eslint-config-aether": "2.x.x",
+		"esbuild": "0.28.x",
+		"eslint": "10.x.x",
+		"eslint-config-aether": "3.x.x",
 		"npm-run-all": "4.x.x",
-		"tslib": "2.x.x",
-		"typescript": "5.x.x"
+		"tsx": "4.x.x",
+		"typescript": "6.0.x"
 	}
 }
