@@ -5,7 +5,21 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import * as path from "path";
 
-const EOL = /(?:\\r\\n|\\r|\\n)/g;
+/**
+ * Asynchronously reads the entire contents of a file.
+ *
+ * @param name - The name of the file.
+ * @return A promise that returns the file contents (without EOL).
+ */
+
+async function read(file: string): Promise<string> {
+
+	const EOL = /(?:\\r\\n|\\r|\\n)/g;
+	const data = await readFile(file, "utf8");
+
+	return data.replace(EOL, "");
+
+}
 
 /**
  * Creates a temporary project folder for test files.
@@ -33,10 +47,10 @@ describe("ESBuild Plugin GLSL", () => {
 			plugins: [glsl()]
 		});
 
-		const actual = await readFile("test/generated/glsl.js", "utf8");
-		const expected = await readFile("test/expected/glsl.js", "utf8");
+		const actual = await read("test/generated/glsl.js");
+		const expected = await read("test/expected/glsl.js");
 
-		assert.equal(actual.replace(EOL, ""), expected.replace(EOL, ""));
+		assert.equal(actual, expected);
 
 	});
 
@@ -52,10 +66,10 @@ describe("ESBuild Plugin GLSL", () => {
 			plugins: [glsl({ minify: true })]
 		});
 
-		const actual = await readFile("test/generated/glsl.min.js", "utf8");
-		const expected = await readFile("test/expected/glsl.min.js", "utf8");
+		const actual = await read("test/generated/glsl.min.js");
+		const expected = await read("test/expected/glsl.min.js");
 
-		assert.equal(actual.replace(EOL, ""), expected.replace(EOL, ""));
+		assert.equal(actual, expected);
 
 	});
 
@@ -74,10 +88,10 @@ describe("ESBuild Plugin GLSL", () => {
 			})]
 		});
 
-		const actual = await readFile("test/generated/wgsl.min.js", "utf8");
-		const expected = await readFile("test/expected/wgsl.min.js", "utf8");
+		const actual = await read("test/generated/wgsl.min.js");
+		const expected = await read("test/expected/wgsl.min.js");
 
-		assert.equal(actual.replace(EOL, ""), expected.replace(EOL, ""));
+		assert.equal(actual, expected);
 
 	});
 
@@ -93,10 +107,10 @@ describe("ESBuild Plugin GLSL", () => {
 			plugins: [glsl()]
 		});
 
-		const actual = await readFile("test/generated/include.js", "utf8");
-		const expected = await readFile("test/expected/include.js", "utf8");
+		const actual = await read("test/generated/include.js");
+		const expected = await read("test/expected/include.js");
 
-		assert.equal(actual.replace(EOL, ""), expected.replace(EOL, ""));
+		assert.equal(actual, expected);
 		assert.equal(result.warnings.length, 1);
 		assert.match(result.warnings[0].text, /missing\.glsl/);
 
@@ -115,10 +129,10 @@ describe("ESBuild Plugin GLSL", () => {
 			plugins: [glsl({ minify: true })]
 		});
 
-		const actual = await readFile("test/generated/wgsl-legal.min.js", "utf8");
-		const expected = await readFile("test/expected/wgsl-legal.min.js", "utf8");
+		const actual = await read("test/generated/wgsl-legal.min.js");
+		const expected = await read("test/expected/wgsl-legal.min.js");
 
-		assert.equal(actual.replace(EOL, ""), expected.replace(EOL, ""));
+		assert.equal(actual, expected);
 
 	});
 
@@ -148,7 +162,7 @@ describe("ESBuild Plugin GLSL", () => {
 		await ctx.rebuild();
 		await ctx.dispose();
 
-		const actual = await readFile(outfile, "utf8");
+		const actual = await read(outfile);
 
 		assert.match(actual, /vec3 color = vec3\(0\.0\)/);
 		assert.doesNotMatch(actual, /vec3 color = vec3\(1\.0\)/);
@@ -187,14 +201,10 @@ describe("ESBuild Plugin GLSL", () => {
 			plugins: [plugin]
 		});
 
-		const actualFirst = await readFile(firstOutfile, "utf8");
-		const actualSecond = await readFile(secondOutfile, "utf8");
+		const actual = await read(secondOutfile);
 
-		assert.match(actualFirst, /gl_FragColor = vec4\(1\.0\)/);
-		assert.doesNotMatch(actualFirst, /gl_FragColor=vec4\(1\.0\)/);
-
-		assert.match(actualSecond, /gl_FragColor=vec4\(1\.0\)/);
-		assert.doesNotMatch(actualSecond, /gl_FragColor = vec4\(1\.0\)/);
+		assert.match(actual, /gl_FragColor=vec4\(1\.0\)/);
+		assert.doesNotMatch(actual, /gl_FragColor = vec4\(1\.0\)/);
 
 	});
 
