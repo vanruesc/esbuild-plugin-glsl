@@ -39,6 +39,22 @@ export interface GLSLOptions {
 }
 
 /**
+ * Escapes special chars that can break the shader template string.
+ *
+ * @param contents - The shader code.
+ * @return The escaped shader code.
+ */
+
+function escapeSpecialChars(contents: string): string {
+
+	return contents
+		.replace(/\\/g, "\\\\")
+		.replace(/`/g, "\\`")
+		.replace(/\$\{/g, () => "\\${");
+
+}
+
+/**
  * An options wrapper function that returns the GLSL plugin.
  *
  * @param options - The options.
@@ -59,9 +75,11 @@ function glsl(options?: GLSLOptions): Plugin {
 				const minify = options?.minify ?? build.initialOptions.minify ?? false;
 				const preserveLegalComments = options?.preserveLegalComments ?? build.initialOptions.legalComments !== "none";
 
-				data.contents = minify ?
-					`export default \`${minifyShader(data.contents as string, preserveLegalComments)}\`` :
-					`export default \`${data.contents as string}\``;
+				const contents = minify ?
+					minifyShader(data.contents as string, preserveLegalComments) :
+					data.contents as string;
+
+				data.contents = `export default \`${escapeSpecialChars(contents)}\``;
 
 				return data;
 
