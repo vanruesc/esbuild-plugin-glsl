@@ -11,9 +11,6 @@
 		// File Layout
 		"rootDir": ".",
 		"outDir": "./dist",
-		"paths": {
-			"esbuild-plugin-glsl": ["./src/index.js"]
-		},
 		// Environment Settings
 		"moduleResolution": "bundler",
 		"module": "esnext",
