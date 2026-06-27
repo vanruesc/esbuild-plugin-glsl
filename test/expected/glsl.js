@@ -16,7 +16,7 @@ varying vec2 vUv;
 
 /**
  * Multiline
- * comment
+ * comment\`; value = \${1 + 1};
  */
 
 float testInnerMacros(const in float x) {
@@ -61,8 +61,7 @@ void main() {
 
 	gl_FragColor.a = (taps == 42) ? 1.0 : 0.0;
 
-}
-`;
+} // trailing comment`;
 
 // test/src/glsl.ts
 console.log(shader_default);
