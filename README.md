@@ -14,10 +14,10 @@ npm install esbuild-plugin-glsl
 ## Usage
 
 ```js
-import { build } from "esbuild";
+import esbuild from "esbuild";
 import { glsl } from "esbuild-plugin-glsl";
 
-build({
+await esbuild.build({
 	entryPoints: ["input.js"],
 	outfile: "output.js",
 	bundle: true,
@@ -37,7 +37,7 @@ build({
 
 ### TypeScript
 
-To make the TypeScript compiler know how to handle shader sources, add a `shaders.d.ts` [ambient declaration file](https://basarat.gitbook.io/typescript/type-system/intro/d.ts) to your project:
+To tell the TypeScript compiler how to handle shader sources, add a `shaders.d.ts` [ambient declaration file](https://basarat.gitbook.io/typescript/type-system/intro/d.ts) to your project:
 
 ```ts
 declare module "*.wgsl" {
