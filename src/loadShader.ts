@@ -46,8 +46,7 @@ export async function load(filePath: string, cache: Map<string, string>,
 	const warnings: PartialMessage[] = [];
 	const watchFiles = new Set<string>();
 
-	const importPatternRegExp = /#include +["']([.\\/\w-]+)["']/g;
-	const linebreakRegExp = /\r|\n|\r\n/g;
+	const importPatternRegExp = /^[ \t]*#include +["']([.\\/\w-]+)["']/gm;
 
 	let match = importPatternRegExp.exec(contents);
 
@@ -90,15 +89,15 @@ export async function load(filePath: string, cache: Map<string, string>,
 
 			}
 
-			const lines = contents.split(linebreakRegExp);
-			const lineIndex = lines.indexOf(match[0]);
-			const lineText = lines[lineIndex];
+			const lineStart = contents.lastIndexOf("\n", match.index) + 1;
+			const lineEnd = contents.indexOf("\n", match.index);
+			const lineText = contents.slice(lineStart, lineEnd === -1 ? undefined : lineEnd);
 
 			warnings.push({
-				text: `File from <${match[0]}> not found`,
+				text: `File from <${match[0].trim()}> not found`,
 				location: {
-					file: fileName,
-					line: lineIndex + 1,
+					file: filePath,
+					line: contents.slice(0, lineStart).split("\n").length,
 					length: fileName.length,
 					column: lineText.indexOf(fileName),
 					lineText
