@@ -11,9 +11,9 @@ const readFile = util.promisify(fs.readFile);
 
 interface ShaderInclude {
 
-	file: string,
-	contents: string,
-	target: string
+	file: string;
+	contents: string;
+	target: string;
 
 }
 

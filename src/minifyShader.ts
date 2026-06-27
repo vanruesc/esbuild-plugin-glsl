@@ -4,8 +4,8 @@
 
 interface LegalComment {
 
-	contents: string,
-	placeholder: string
+	contents: string;
+	placeholder: string;
 
 }
 

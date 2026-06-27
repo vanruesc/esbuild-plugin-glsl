@@ -59,21 +59,17 @@ function glsl({
 
 			async function onLoad(args: OnLoadArgs): Promise<OnLoadResult> {
 
-				let { contents, warnings, watchFiles } = await load(args.path, cache, resolveIncludes);
+				const data = await load(args.path, cache, resolveIncludes);
+				data.loader = "js";
 
 				minify ??= build.initialOptions.minify ?? false;
 				preserveLegalComments ??= build.initialOptions.legalComments !== "none";
 
-				contents = minify ?
-					`export default \`${minifyShader(contents as string, preserveLegalComments)}\`` :
-					`export default \`${contents as string}\``;
+				data.contents = minify ?
+					`export default \`${minifyShader(data.contents as string, preserveLegalComments)}\`` :
+					`export default \`${data.contents as string}\``;
 
-				return {
-					contents,
-					warnings,
-					watchFiles,
-					loader: "js"
-				};
+				return data;
 
 			}
 
